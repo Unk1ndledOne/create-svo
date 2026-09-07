@@ -16,3 +16,13 @@ cogwheelChainDriveCostFactor = 1.0
 # Default: 32
 # Range: 1 ~ 128
 headlampCCBlockRange = 32
+#.
+#Maximum bounds for cogwheel chain drives. May have undefined behaviour at large values.
+# Default: 64
+# Range: 1 ~ 256
+cogwheelMaxBounds = 64
+#.
+#Maximum number of nodes in a cogwheel chain.
+# Default: 64
+# Range: 1 ~ 256
+cogwheelMaxNodeCount = 64
