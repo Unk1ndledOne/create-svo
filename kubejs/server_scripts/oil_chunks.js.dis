@@ -1,0 +1,103 @@
+CDGEvents.oilAmount((event) => {
+    const x = event.chunkPos.x;
+    const z = event.chunkPos.z;
+    const seed = event.seed;
+    const biomes = event.biomes;
+
+    // --- Настройки ---
+    const CLUSTER_SCALE = 0.08;      // масштаб кластеров (меньше = крупнее острова)
+    const FINE_SCALE = 0.4;          // мелкий шум внутри кластера (вариация)
+    const THRESHOLD = 0.55;          // порог появления нефти (0..1, выше = реже)
+    const MAX_NORMAL = 8000000;    // макс нефть в обычном биоме (мб)
+    const MAX_HIGH = 50000000;     // макс нефть в high-oil биоме (мб)
+    const MIN_AMOUNT = 1500000;    // минимум (меньше — возвращаем 0)
+    const INFINITE_THRESHOLD = 10000000; // выше — бесконечный чанк
+
+    // Биомы с повышенным количеством нефти
+    const HIGH_OIL_BIOMES = [
+        "minecraft:desert",
+        "minecraft:badlands",
+        "minecraft:wooded_badlands",
+        "minecraft:eroded_badlands",
+        "minecraft:savanna",
+        "minecraft:savanna_plateau",
+    ];
+
+    // Биомы где нефти нет вообще
+    const DENY_BIOMES = [
+        "minecraft:jungle",
+        "minecraft:bamboo_jungle",
+        "minecraft:deep_dark",
+        "minecraft:mushroom_fields",
+    ];
+
+
+    // Проверяем биомы
+    let isHigh = false;
+    let isDenied = false;
+    for (let i = 0; i < biomes.length; i++) {
+        if (HIGH_OIL_BIOMES.includes(biomes[i])) isHigh = true;
+        if (DENY_BIOMES.includes(biomes[i])) isDenied = true;
+    }
+    if (isDenied) {
+        event.success(0);
+        return;
+    }
+
+    // Простой детерминированный шум на основе seed + координат
+    // (KubeJS не даёт доступ к PerlinNoise, делаем свой через hash)
+    function hash(a, b, s) {
+        let h = (a * 1619 + b * 31337 + s * 6971) | 0;
+        h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+        h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+        h = h ^ (h >>> 16);
+        return (h & 0x7fffffff) / 0x7fffffff; // 0..1
+    }
+
+    // Интерполированный шум (билинейная интерполяция по соседним целым точкам)
+    function smoothNoise(nx, nz, s) {
+        const ix = Math.floor(nx);
+        const iz = Math.floor(nz);
+        const fx = nx - ix;
+        const fz = nz - iz;
+        // Smoothstep
+        const ux = fx * fx * (3 - 2 * fx);
+        const uz = fz * fz * (3 - 2 * fz);
+
+        const v00 = hash(ix,     iz,     s);
+        const v10 = hash(ix + 1, iz,     s);
+        const v01 = hash(ix,     iz + 1, s);
+        const v11 = hash(ix + 1, iz + 1, s);
+
+        return v00 + (v10 - v00) * ux
+                   + (v01 - v00) * uz
+                   + (v00 - v10 - v01 + v11) * ux * uz;
+    }
+
+    // Два слоя шума: крупный (форма кластера) + мелкий (вариация внутри)
+    const coarse = smoothNoise(x * CLUSTER_SCALE, z * CLUSTER_SCALE, seed);
+    const fine   = smoothNoise(x * FINE_SCALE,    z * FINE_SCALE,    seed + 999999);
+    const combined = coarse * 0.75 + fine * 0.25;
+
+    // Ниже порога — нефти нет
+    if (combined < THRESHOLD) {
+        event.success(0);
+        return;
+    }
+
+    // Нормализуем значение выше порога в диапазон 0..1
+    const t = (combined - THRESHOLD) / (1.0 - THRESHOLD);
+    const max = isHigh ? MAX_HIGH : MAX_NORMAL;
+    let amount = Math.pow(t, 2) * max;
+
+    if (amount < MIN_AMOUNT) {
+        event.success(0);
+        return;
+    }
+    if (amount > INFINITE_THRESHOLD) {
+        event.success(2147483647); // Integer.MAX_VALUE = бесконечный чанк
+        return;
+    }
+
+    event.success(Math.floor(amount));
+});

@@ -1,0 +1,16 @@
+#Client-side closed airspace warning settings.
+[clientWarnings]
+	#Show a warning before entering another team's claimed airspace.
+	enableApproachWarning = true
+	#Warn when the predicted time until entering closed airspace is less than or equal to this many seconds.
+	# Default: 60.0
+	# Range: 1.0 ~ 300.0
+	approachWarningSeconds = 60.0
+	#How often the client checks for upcoming closed airspace, in ticks.
+	# Default: 10
+	# Range: 1 ~ 100
+	warningCheckIntervalTicks = 10
+	#Show a message when you enter another team's closed airspace.
+	enableEnteredMessage = true
+	#Show a message when you leave another team's closed airspace.
+	enableExitedMessage = true

@@ -1,0 +1,8 @@
+ServerEvents.recipes(event => {
+    event.remove({ output: 'burnt:rainbow_flag' })
+    event.remove({ input: 'burnt:rainbow_flag' })
+})
+
+LootJS.modifiers(event => {
+    event.removeItem('burnt:rainbow_flag')
+})

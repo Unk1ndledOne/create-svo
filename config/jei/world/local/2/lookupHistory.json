@@ -1,0 +1,8 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"createpropulsion:oxidizer"},"type":"fluid_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createpropulsion:thruster"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createdieselgenerators:burner"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createdieselgenerators:magenta_cement_bucket"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createdieselgenerators:distillation_controller"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]

@@ -1,0 +1,21 @@
+{
+  "_comment": [
+    " - Configuration for the mass of Living Entities - ",
+    "",
+    "enabled -> toggles mass application for LivingEntity values",
+    "automatic_mass = collision box volume * volume_multiplier",
+    "base_mass is used if automatic or override mass resolution fails",
+    "entities -> maps entity ids to fixed masses and overrides formula/automatic resolution for those entity ids",
+    "entity_formula -> applies to LivingEntity only",
+    " ⇢ supports variables: width, height, depth, volume, auto_mass, base_mass, volume_multiplier, health, max_health, age_scale",
+    " ⇢ supports operators: +, -, *, /, %, ^ and functions: abs, sqrt, floor, ceil, round, min, max, pow, clamp"
+  ],
+  "enabled": true,
+  "base_mass": 0.5,
+  "volume_multiplier": 4.0,
+  "entities": {},
+  "entity_formula": {
+    "enabled": true,
+    "formula": "min(auto_mass, 15)"
+  }
+}

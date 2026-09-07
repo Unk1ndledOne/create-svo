@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>CDG Oil Visualizer</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: #0f1115;
+        color: white;
+        font-family: Inter, sans-serif;
+        display: flex;
+    }
+
+    #mapContainer {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #0b0d11;
+    }
+
+    canvas {
+        image-rendering: pixelated;
+        border-right: 1px solid #222;
+    }
+
+    #sidebar {
+        width: 340px;
+        padding: 20px;
+        background: #12151b;
+        overflow-y: auto;
+        border-left: 1px solid #222;
+    }
+
+    h1 {
+        margin-top: 0;
+        font-size: 28px;
+    }
+
+    .group {
+        margin-bottom: 26px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #ccc;
+    }
+
+    input[type=range] {
+        width: 100%;
+    }
+
+    .value {
+        color: #67d3ff;
+        font-size: 14px;
+        margin-top: 4px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: #2d89ff;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 12px;
+    }
+
+    button:hover {
+        background: #4b9cff;
+    }
+
+    #tooltip {
+        position: fixed;
+        pointer-events: none;
+        background: rgba(0,0,0,0.92);
+        border: 1px solid #555;
+        border-radius: 10px;
+        padding: 10px;
+        display: none;
+        font-size: 14px;
+        z-index: 100;
+        min-width: 220px;
+    }
+
+    .legendBar {
+        height: 16px;
+        border-radius: 8px;
+        background:
+            linear-gradient(
+                to right,
+                #00ff00,
+                #ffff00,
+                #ff6600,
+                #ff0000
+            );
+        margin-top: 8px;
+    }
+
+    .legendText {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6px;
+        font-size: 13px;
+    }
+
+</style>
+</head>
+<body>
+
+<div id="mapContainer">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div id="sidebar">
+
+    <h1>CDG Oil Visualizer</h1>
+
+    <div class="group">
+        <label>Threshold</label>
+        <input id="threshold" type="range" min="0" max="1" step="0.01" value="0.52">
+        <div class="value" id="thresholdValue">0.52</div>
+    </div>
+
+    <div class="group">
+        <label>Cluster Scale</label>
+        <input id="clusterScale" type="range" min="0.02" max="0.25" step="0.01" value="0.14">
+        <div class="value" id="clusterScaleValue">0.14</div>
+    </div>
+
+    <div class="group">
+        <label>Fine Scale</label>
+        <input id="fineScale" type="range" min="0.05" max="1" step="0.05" value="0.55">
+        <div class="value" id="fineScaleValue">0.55</div>
+    </div>
+
+    <div class="group">
+        <label>Peak Power</label>
+        <input id="peakPower" type="range" min="1" max="4" step="0.1" value="1.6">
+        <div class="value" id="peakPowerValue">1.6</div>
+    </div>
+
+    <button onclick="generate()">Generate</button>
+
+    <div class="group">
+        <h3>Heatmap</h3>
+
+        <div class="legendBar"></div>
+
+        <div class="legendText">
+            <span>MIN</span>
+            <span>MAX</span>
+        </div>
+    </div>
+
+    <div class="group">
+        <p>
+            Карта: 1000×1000 чанков<br>
+            1 чанк = 16×16 блоков
+        </p>
+    </div>
+
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+
+const SIZE = 1000;
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = SIZE;
+canvas.height = SIZE;
+
+canvas.style.width = "1000px";
+canvas.style.height = "1000px";
+
+const tooltip = document.getElementById("tooltip");
+
+const MAX_NORMAL = 8000000;
+const MAX_HIGH = 18000000;
+const MIN_AMOUNT = 500000;
+
+const seed = 1337;
+
+let oilMap = [];
+
+function updateLabels() {
+
+    [
+        "threshold",
+        "clusterScale",
+        "fineScale",
+        "peakPower"
+    ].forEach(id => {
+
+        document.getElementById(id + "Value").innerText =
+            document.getElementById(id).value;
+    });
+}
+
+updateLabels();
+
+document.querySelectorAll("input").forEach(el => {
+    el.addEventListener("input", updateLabels);
+});
+
+function hash(a, b, s) {
+
+    let h = (a * 1619 + b * 31337 + s * 6971) | 0;
+
+    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+
+    h ^= h >>> 16;
+
+    return (h & 0x7fffffff) / 0x7fffffff;
+}
+
+function smoothNoise(nx, nz, s) {
+
+    const ix = Math.floor(nx);
+    const iz = Math.floor(nz);
+
+    const fx = nx - ix;
+    const fz = nz - iz;
+
+    const ux = fx * fx * (3 - 2 * fx);
+    const uz = fz * fz * (3 - 2 * fz);
+
+    const v00 = hash(ix, iz, s);
+    const v10 = hash(ix + 1, iz, s);
+    const v01 = hash(ix, iz + 1, s);
+    const v11 = hash(ix + 1, iz + 1, s);
+
+    return v00
+        + (v10 - v00) * ux
+        + (v01 - v00) * uz
+        + (v00 - v10 - v01 + v11) * ux * uz;
+}
+
+function biomeType(x, z) {
+
+    const n = smoothNoise(
+        x * 0.01,
+        z * 0.01,
+        seed + 999
+    );
+
+    if (n < 0.20) return "deny";
+    if (n > 0.72) return "rich";
+
+    return "normal";
+}
+
+function heatColor(t) {
+
+    // green -> yellow -> orange -> red
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    if (t < 0.33) {
+
+        const k = t / 0.33;
+
+        r = 255 * k;
+        g = 255;
+
+    } else if (t < 0.66) {
+
+        const k = (t - 0.33) / 0.33;
+
+        r = 255;
+        g = 255 - 120 * k;
+
+    } else {
+
+        const k = (t - 0.66) / 0.34;
+
+        r = 255;
+        g = 135 - 135 * k;
+    }
+
+    return [r, g, b];
+}
+
+function generate() {
+
+    const THRESHOLD =
+        parseFloat(document.getElementById("threshold").value);
+
+    const CLUSTER_SCALE =
+        parseFloat(document.getElementById("clusterScale").value);
+
+    const FINE_SCALE =
+        parseFloat(document.getElementById("fineScale").value);
+
+    const PEAK_POWER =
+        parseFloat(document.getElementById("peakPower").value);
+
+    const image = ctx.createImageData(SIZE, SIZE);
+
+    const data = image.data;
+
+    oilMap = [];
+
+    let ptr = 0;
+
+    for (let z = 0; z < SIZE; z++) {
+
+        oilMap[z] = [];
+
+        for (let x = 0; x < SIZE; x++) {
+
+            const biome = biomeType(x, z);
+
+            // background biomes
+
+            let br = 0;
+            let bg = 0;
+            let bb = 0;
+
+            if (biome === "deny") {
+
+                br = 45;
+                bg = 52;
+                bb = 64;
+
+            } else if (biome === "rich") {
+
+                br = 110;
+                bg = 96;
+                bb = 58;
+
+            } else {
+
+                br = 60;
+                bg = 90;
+                bb = 60;
+            }
+
+            const coarse =
+                smoothNoise(
+                    x * CLUSTER_SCALE,
+                    z * CLUSTER_SCALE,
+                    seed
+                );
+
+            const fine =
+                smoothNoise(
+                    x * FINE_SCALE,
+                    z * FINE_SCALE,
+                    seed + 77777
+                );
+
+            const combined =
+                coarse * 0.8 +
+                fine * 0.2;
+
+            let amount = 0;
+
+            if (biome !== "deny") {
+
+                const t =
+                    Math.max(
+                        0,
+                        (combined - THRESHOLD)
+                        / (1 - THRESHOLD)
+                    );
+
+                const max =
+                    biome === "rich"
+                    ? MAX_HIGH
+                    : MAX_NORMAL;
+
+                amount =
+                    Math.pow(t, PEAK_POWER)
+                    * max;
+
+                if (amount < MIN_AMOUNT) {
+                    amount = 0;
+                }
+            }
+
+            oilMap[z][x] = Math.floor(amount);
+
+            // draw background
+
+            data[ptr++] = br;
+            data[ptr++] = bg;
+            data[ptr++] = bb;
+            data[ptr++] = 255;
+
+            // overlay oil heatmap
+
+            if (amount > 0) {
+
+                const normalized =
+                    Math.min(
+                        1,
+                        amount / MAX_HIGH
+                    );
+
+                const [r, g, b] =
+                    heatColor(normalized);
+
+                const p = ptr - 4;
+
+                data[p + 0] =
+                    data[p + 0] * 0.35 + r * 0.65;
+
+                data[p + 1] =
+                    data[p + 1] * 0.35 + g * 0.65;
+
+                data[p + 2] =
+                    data[p + 2] * 0.35 + b * 0.65;
+            }
+        }
+    }
+
+    ctx.putImageData(image, 0, 0);
+}
+
+generate();
+
+canvas.addEventListener("mousemove", e => {
+
+    const rect = canvas.getBoundingClientRect();
+
+    const x = Math.floor(
+        (e.clientX - rect.left)
+        * SIZE
+        / rect.width
+    );
+
+    const z = Math.floor(
+        (e.clientY - rect.top)
+        * SIZE
+        / rect.height
+    );
+
+    if (
+        x < 0 || z < 0 ||
+        x >= SIZE || z >= SIZE
+    ) {
+        tooltip.style.display = "none";
+        return;
+    }
+
+    const amount = oilMap[z][x];
+
+    tooltip.style.display = "block";
+
+    tooltip.style.left = (e.clientX + 16) + "px";
+    tooltip.style.top = (e.clientY + 16) + "px";
+
+    tooltip.innerHTML = `
+        <b>X:</b> ${x * 16} блоков<br>
+        <b>Z:</b> ${z * 16} блоков<br><br>
+        <b>Нефть:</b>
+        ${amount.toLocaleString()} mb
+    `;
+});
+
+canvas.addEventListener("mouseleave", () => {
+    tooltip.style.display = "none";
+});
+
+</script>
+
+</body>
+</html>

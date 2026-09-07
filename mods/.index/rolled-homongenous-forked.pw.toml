@@ -1,0 +1,16 @@
+filename = 'rha-1.0.3b.jar'
+name = 'Rolled Homongenous: Forked'
+side = 'both'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+
+[download]
+hash = 'b1580113fe5fd548746c976a79cf83cf70e1214b5145361b79f4a5a998a9eb9f36aec53bd4b02e702f688f833e0bf7a2f394bbb503beb6ab29db29d829099167'
+hash-format = 'sha512'
+mode = 'url'
+url = 'https://cdn.modrinth.com/data/UFXAeoqT/versions/WODSoRtT/rha-1.0.3b.jar'
+
+[update.modrinth]
+mod-id = 'UFXAeoqT'
+version = 'WODSoRtT'

@@ -1,0 +1,4 @@
+		[compatibility.create.encasedFanAirflow]
+			#If enabled, Create Encased Fan airflow will apply force to Sable sub-levels touched by the airflow.
+			#This affects server-side physics behaviour.
+			applyForceToTouchedSublevels = true

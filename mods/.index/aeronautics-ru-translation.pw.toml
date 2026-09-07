@@ -1,0 +1,16 @@
+filename = 'aeronautics_translation-1.1.jar'
+name = 'Create: Aeronautics RU Mod'
+side = 'client'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+
+[download]
+hash = '47acae3ec984cbc016928a46129bedf6c6e424cc'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 7966839
+project-id = 1520895

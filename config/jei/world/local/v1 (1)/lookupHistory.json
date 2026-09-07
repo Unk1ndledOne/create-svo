@@ -1,0 +1,6 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"burnt:fire_barrel"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createpropulsion:oxidizer"},"type":"fluid_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createpropulsion:oxidizer_bucket"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]

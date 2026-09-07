@@ -1,0 +1,5 @@
+		[compatibility.create.mechanicalArm]
+			#If enabled, configuring a Mechanical Arm will not remove interaction points for being out of range
+			#whenever the arm or one of the selected targets is currently inside a Sable sub-level.
+			#This only changes the configuration/placement step and does not alter the arm runtime search range.
+			ignorePlacementRangeForSublevelTargets = true

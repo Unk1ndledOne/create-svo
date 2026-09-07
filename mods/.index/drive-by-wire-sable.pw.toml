@@ -1,0 +1,16 @@
+filename = 'drivebywire-0.3.0.jar'
+name = 'Drive By Wire'
+side = 'both'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+
+[download]
+hash = '09e5cac69600e20e56a9bb66d2c1fd60ff36906f47b86bc1dc27efb1624c671f61bca3c774e08d2c28b59839a914ac067f4d97b304a5ac543a7c016756a46952'
+hash-format = 'sha512'
+mode = 'url'
+url = 'https://cdn.modrinth.com/data/KsqvI0hD/versions/zdSwg9kS/drivebywire-0.3.0.jar'
+
+[update.modrinth]
+mod-id = 'KsqvI0hD'
+version = 'zdSwg9kS'

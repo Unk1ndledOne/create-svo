@@ -1,0 +1,90 @@
+#If true, computers require energy to run (stationary FE / pocket batteries).
+requireEnergy = true
+#If true, computers that brown out will automatically turn back on when power returns.
+autoReboot = true
+# Default: 4
+# Range: 0 ~ 10000
+normalDrain = 4
+# Default: 12
+# Range: 0 ~ 10000
+advancedDrain = 12
+# Default: 400
+# Range: 1 ~ 10000000
+normalCapacity = 400
+# Default: 1200
+# Range: 1 ~ 10000000
+advancedCapacity = 1200
+# Default: 256
+# Range: 1 ~ 100000
+maxReceive = 256
+#Max FE/t that can be pulled from a stationary computer (UPS then capacitor). Pull only; no auto-push.
+# Default: 256
+# Range: 1 ~ 100000
+maxExtract = 256
+
+[pocketBatteries]
+	# Default: 8000
+	# Range: > 1
+	copperCapacity = 8000
+	# Default: 32000
+	# Range: > 1
+	ironCapacity = 32000
+	# Default: 128000
+	# Range: > 1
+	goldCapacity = 128000
+	# Default: 512000
+	# Range: > 1
+	diamondCapacity = 512000
+	# Default: 2048000
+	# Range: > 1
+	netheriteCapacity = 2048000
+	# Default: 40
+	# Range: 1 ~ 100000
+	copperReceive = 40
+	# Default: 80
+	# Range: 1 ~ 100000
+	ironReceive = 80
+	# Default: 160
+	# Range: 1 ~ 100000
+	goldReceive = 160
+	# Default: 320
+	# Range: 1 ~ 100000
+	diamondReceive = 320
+	# Default: 640
+	# Range: 1 ~ 100000
+	netheriteReceive = 640
+	# Default: 2
+	# Range: 0 ~ 10000
+	copperDrain = 2
+	# Default: 2
+	# Range: 0 ~ 10000
+	ironDrain = 2
+	# Default: 3
+	# Range: 0 ~ 10000
+	goldDrain = 3
+	# Default: 3
+	# Range: 0 ~ 10000
+	diamondDrain = 3
+	# Default: 4
+	# Range: 0 ~ 10000
+	netheriteDrain = 4
+
+[charger]
+	#Max FE/t the unlimited charger can push into a battery.
+	# Default: 1000
+	# Range: 1 ~ 100000
+	maxReceive = 1000
+	#Max FE/t pulled from a battery in the unlimited charger. Pull only.
+	# Default: 1000
+	# Range: 1 ~ 100000
+	maxExtract = 1000
+
+[dock]
+	#How far (blocks) a turtle can detect turtle docks via battery.findDocks().
+	# Default: 60
+	# Range: 1 ~ 256
+	range = 60
+	#Max FE/t a turtle dock can push into a docked turtle battery.
+	# Default: 500
+	# Range: 1 ~ 100000
+	maxReceive = 500

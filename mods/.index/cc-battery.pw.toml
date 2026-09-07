@@ -1,0 +1,16 @@
+filename = 'cc_battery-1.2.0.jar'
+name = 'CC: Battery'
+side = 'both'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+
+[download]
+hash = 'b9ace5de2a2dc8dc2f039966e3924a921ed2e5ec29173d1b6e2e4c14e8792fa5436c484ea2c533cad5baca236ee58d890427ae8e9cfe5d161bb5234015af2496'
+hash-format = 'sha512'
+mode = 'url'
+url = 'https://cdn.modrinth.com/data/I6XgwtMn/versions/QUOiSCvT/cc_battery-1.2.0.jar'
+
+[update.modrinth]
+mod-id = 'I6XgwtMn'
+version = 'QUOiSCvT'

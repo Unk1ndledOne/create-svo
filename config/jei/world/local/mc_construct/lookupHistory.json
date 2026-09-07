@@ -1,0 +1,11 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"windtunnel:wind_tunnel"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:conduit"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"windtunnel:airflow_injector"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"computercraft:turtle_normal","components":{"computercraft:right_turtle_upgrade":{"id":"minecraft:crafting_table"}}},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"neoperipheral:nfc_reader"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"neoperipheral:nfc_card"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createpropulsion:oxidizer"},"type":"fluid_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"createpropulsion:oxidizer_bucket"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]

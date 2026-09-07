@@ -1,0 +1,6 @@
+[damping_stress_bearing]
+	#Blocks that disable damping bearing stress output when found on the attached child sublevel or an adjacent physical structure.
+	#Speed output is preserved; only stress capacity is canceled.
+	#Use full block ids such as simulated:swivel_bearing.
+	#Simulated swivel bearing blocks are always included as safety entries.
+	stress_output_blacklist = ["simulated:swivel_bearing", "simulated:swivel_bearing_link_block"]

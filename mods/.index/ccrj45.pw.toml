@@ -1,0 +1,16 @@
+filename = 'ccrj45-1.2.1.jar'
+name = 'CC: RJ45'
+side = 'both'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+
+[download]
+hash = 'dcdf8ac34d7e4a8e3e0bb03cd09a875a819ca404e2f7572528bfae12278112a1b9dd307b5638cd016b5947c6f3039aed058fdd1542547988e63bebe18f9fe175'
+hash-format = 'sha512'
+mode = 'url'
+url = 'https://cdn.modrinth.com/data/GZ875jdx/versions/9KaoYjFR/ccrj45-1.2.1.jar'
+
+[update.modrinth]
+mod-id = 'GZ875jdx'
+version = '9KaoYjFR'

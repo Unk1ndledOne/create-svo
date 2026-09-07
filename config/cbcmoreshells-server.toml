@@ -1,0 +1,15 @@
+#.
+#These values affect various miscellaneous contraptions.
+[kinetics]
+
+		#.
+		#.
+		#Stressful, I know.
+		[kinetics.stressValues.v2]
+
+			#.
+			#.
+			#[in Stress Units]
+			#Configure the individual stress impact of mechanical blocks. Note that this cost is doubled for every speed increase it receives.
+			[kinetics.stressValues.v2.impact]
+				torpedo_detection_device = 32.0

@@ -1,0 +1,12 @@
+#Maximum cable link distance for Net Cable Connector blocks.
+# Default: 15
+# Range: 1 ~ 256
+connectorMaxCableLength = 15
+#Maximum cable link distance for Net Cable Connector Huge blocks.
+# Default: 38
+# Range: 1 ~ 512
+connectorHugeMaxCableLength = 38
+#Portable drive capacity in bytes. Default 1_048_576 (1 MB).
+# Default: 1048576
+# Range: 16384 ~ 268435456
+diskCapacityBytes = 1048576

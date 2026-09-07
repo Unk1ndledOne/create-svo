@@ -1,0 +1,14 @@
+{
+  "outerMargin": 4,
+  "panelTop": 4,
+  "panelBottom": 8,
+  "panelGap": 12,
+  "panelPad": 6,
+  "toolGap": 4,
+  "toolCell": 23,
+  "headerOffset": 21,
+  "listGap": 10,
+  "topBlockBottomGap": 4,
+  "rightPanelMinWidth": 212,
+  "buttonTextScale": 1.0
+}

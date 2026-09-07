@@ -1,0 +1,16 @@
+filename = 'CBCmoreshells-1.2.2.jar'
+name = 'CBC Enhanced Shells'
+side = 'both'
+x-prismlauncher-loaders = [ 'neoforge' ]
+x-prismlauncher-mc-versions = [ '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+
+[download]
+hash = '5b271c0ca5dba70c850c44e024a8fdb044411ebb'
+hash-format = 'sha1'
+mode = 'metadata:curseforge'
+url = ''
+
+[update.curseforge]
+file-id = 8470471
+project-id = 1489732

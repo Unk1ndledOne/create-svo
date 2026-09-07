@@ -1,0 +1,14 @@
+==== Connector Mixin Patch Audit Summary ====
+Successful: 1
+Partial: 0
+Failed: 0
+Success rate: 100.00%        Accuracy: 100.00%
+=============================================
+
+Mixin method com/moulberry/axiom/mixin/render/MixinGui renderSelectedItemName(Lnet/minecraft/client/gui/GuiGraphics;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V
+  >> Using org.sinytra.adapter.patch.processor.PropertyProcessor
+     - Set property 'method' to: MethodQualifier[owner=null, name=renderSelectedItemName, desc=(Lnet/minecraft/client/gui/GuiGraphics;I)V]
+     - Set property 'at' to: AtData{value=HEAD}
+  >> Using org.sinytra.adapter.patch.processor.ParametersProcessor
+     - Change descriptor to (Lnet/minecraft/client/gui/GuiGraphics;ILorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V
+

@@ -1,0 +1,10 @@
+JVM info: Oracle Corporation - 1.8.0_491 - 25.491-b10
+java.net.preferIPv4Stack=true
+Current Time: 14/08/2026 20:45:55
+Host: maven.neoforged.net [185.76.9.11, 185.76.9.27]
+Host: libraries.minecraft.net [150.171.109.198]
+Host: launchermeta.mojang.com [150.171.109.196]
+Host: piston-meta.mojang.com [150.171.109.196]
+Host: sessionserver.mojang.com [150.171.109.198]
+Found java version 1.8.0_491
+Following redirect: https://neoforged.net/mirrorlist.json

@@ -1,0 +1,3 @@
+StartupEvents.modifyCreativeTab('burnt:burnt', event => {
+    event.remove('burnt:rainbow_flag')
+})
