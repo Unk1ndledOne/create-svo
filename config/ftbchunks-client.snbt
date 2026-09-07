@@ -141,19 +141,19 @@
 			"minecraft:ender_dragon": true
 			"minecraft:spider": true
 			"minecraft:iron_golem": true
-			"minecraft:glow_squid": true
-			"minecraft:squid": true
-			"alexsmobs:fly": true
-			"alexsmobs:cockroach": true
-			"alexsmobs:snow_leopard": true
-			"minecraft:villager": true
-			"minecraft:creeper": true
-			"minecraft:skeleton": true
-			"minecraft:rabbit": true
-			"minecraft:bat": true
-			"minecraft:zombie": true
 			"minecraft:sheep": true
+			"minecraft:skeleton": true
+			"minecraft:creeper": true
+			"minecraft:zombie": true
+			"minecraft:bat": true
+			"minecraft:squid": true
+			"minecraft:glow_squid": true
+			"alexsmobs:fly": true
+			"alexsmobs:snow_leopard": true
+			"minecraft:rabbit": true
 			"minecraft:cat": true
+			"minecraft:villager": true
+			"alexsmobs:cockroach": true
 		}
 		
 		# Minimap font scaling (values not a multiple of 0.5 may look bad)

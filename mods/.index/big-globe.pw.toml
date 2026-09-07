@@ -1,0 +1,29 @@
+filename = 'Big Globe-5.3.2-MC1.21.1.jar'
+name = 'Big Globe'
+side = 'both'
+x-prismlauncher-loaders = [ 'fabric' ]
+x-prismlauncher-mc-versions = [ '1.21', '1.21.1' ]
+x-prismlauncher-release-type = 'release'
+x-prismlauncher-version-number = '5.3.2'
+
+[download]
+hash = '1f3d4c2bfd9b46d4ea8244dce148260d52d7ba376965f44466600525860979cbee0f47c9b1757562877d54aa71a768b637cb381107f722508d44a25709182b94'
+hash-format = 'sha512'
+mode = 'url'
+url = 'https://cdn.modrinth.com/data/xsng1aJf/versions/Jqv2nq8g/Big Globe-5.3.2-MC1.21.1.jar'
+
+[update.modrinth]
+mod-id = 'xsng1aJf'
+version = 'Jqv2nq8g'
+
+[[x-prismlauncher-dependencies]]
+addonId = 'P7dR8mSH'
+type = 'REQUIRED'
+
+[[x-prismlauncher-dependencies]]
+addonId = '9s6osm5g'
+type = 'OPTIONAL'
+
+[[x-prismlauncher-dependencies]]
+addonId = 'mOgUt4GM'
+type = 'OPTIONAL'

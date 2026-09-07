@@ -533,7 +533,7 @@ _version = 4
 			# DEFAULT: Default lod renderer 
 			# DEBUG_TRIANGLE: Debug testing renderer 
 			# DISABLED: Disable rendering
-			rendererMode = "DEFAULT"
+			rendererMode = "DISABLED"
 			#
 			# Should specialized colors/rendering modes be used? 
 			# 
@@ -764,7 +764,7 @@ _version = 4
 		# Only visible block/biome changes are recorded in the database. 
 		# Hidden blocks (IE ores) are ignored.  
 		# Expected Compression Ratio: 0.7
-		worldCompression = "VISUALLY_EQUAL"
+		worldCompression = "MERGE_SAME_BLOCKS"
 		dataCompression = "Z_STD_BLOCK"
 
 		[common.lodBuilding.experimental]
@@ -784,7 +784,7 @@ _version = 4
 	[common.multiThreading]
 		#
 		# How many threads should be used by Distant Horizons?
-		numberOfThreads = 4
+		numberOfThreads = 8
 		#
 		# A value between 1.0 and 0.0 that represents the percentage 
 		# of time each thread can run before going idle. 
